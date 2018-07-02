@@ -18,6 +18,8 @@ from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
 
+from builtins import str
+
 from hashlib import md5
 
 import os
@@ -70,11 +72,13 @@ class MetadataCacheItem(spydaap.cache.OrderedCacheItem):
     def write_entry(self, dir, name, fn, daap):
         if isinstance(name, str):
             name = name.encode('utf-8')
-        data = "".join([d.encode() for d in daap])
+        if isinstance(fn, str):
+            fn = fn.encode('utf-8')
+        data = b''.join([d.encode() for d in daap])
         data = struct.pack('!i%ss' % len(name), len(name), name) + data
         data = struct.pack('!i%ss' % len(fn), len(fn), fn) + data
         cachefn = os.path.join(dir, md5(fn).hexdigest())
-        f = open(cachefn, 'w')
+        f = open(cachefn, 'wb')
         f.write(data)
         f.close()
 
