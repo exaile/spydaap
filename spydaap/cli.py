@@ -16,6 +16,9 @@
 
 from __future__ import print_function
 
+from past.builtins import execfile
+from builtins import object
+
 import optparse
 
 import http.server
