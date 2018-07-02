@@ -212,6 +212,7 @@ class DAAPObject(object):
         if not data:
             return
         self.code, self.length = struct.unpack('!4sI', data)
+        self.code = self.code.decode('utf-8')
 
         # now we need to find out what type of object it is
         if self.code is None or self.code not in dmapCodeTypes:
