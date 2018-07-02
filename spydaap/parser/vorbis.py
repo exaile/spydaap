@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import str
+
 import mutagen
 import spydaap
 import re
@@ -75,7 +77,7 @@ class VorbisParser(spydaap.parser.Parser):
         discnumber = None
         disccount = None
         if 'discnumber' in flac.tags:
-            t = unicode(flac.tags['discnumber'][0]).split('/')
+            t = str(flac.tags['discnumber'][0]).split('/')
             discnumber = self.my_int(t[0])
             if (len(t) == 2):
                 disccount = self.my_int(t[1])

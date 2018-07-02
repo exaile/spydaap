@@ -1,5 +1,7 @@
 # adopted from http://stackp.online.fr/?p=35
 
+from builtins import object
+
 __all__ = ["ZeroconfImpl"]
 
 import socket
@@ -24,10 +26,10 @@ class ZeroconfImpl(object):
             self.text = kwargs.get('text', '')
 
     class Zeroconf(Helper):
-        
+
         def publish(self):
             import zeroconf
-            
+
             # zeroconf doesn't do this for us
             # .. pick one at random? Ideally, zeroconf would publish all valid
             #    addresses as the A record.. but doesn't seem to do so
@@ -37,7 +39,7 @@ class ZeroconfImpl(object):
                 for addr in addrs:
                     if addr != '127.0.0.1':
                         address = socket.inet_aton(addrs[0])
-            
+
             type_ = self.stype + ".local."
             self.info = zeroconf.ServiceInfo(
                 type_,
@@ -47,10 +49,10 @@ class ZeroconfImpl(object):
                 properties=self.text,
                 server=self.host if self.host else None
             )
-            
+
             self.zc = zeroconf.Zeroconf()
             self.zc.register_service(self.info)
-        
+
         def unpublish(self):
             self.zc.unregister_service(self.info)
             self.zc.close()
@@ -90,7 +92,7 @@ class ZeroconfImpl(object):
     def __init__(self, *args, **kwargs):
         zeroconf = None
         avahi = None
-        
+
         try:
             import zeroconf
         except ImportError:
@@ -99,15 +101,15 @@ class ZeroconfImpl(object):
                 import dbus
             except ImportError:
                 pass
-        
+
         if zeroconf:
             logger.info("zeroconf implementation is zeroconf")
             self.helper = ZeroconfImpl.Zeroconf(*args, **kwargs)
-            
+
         elif avahi:
             logger.info("zeroconf implementation is avahi")
             self.helper = ZeroconfImpl.Avahi(*args, **kwargs)
-        
+
         else:
             logger.warning('zeroconf implementation not found, cannot announce presence')
             self.helper = None

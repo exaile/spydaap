@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import str
+
 import mutagen.id3
 import mutagen.mp3
 import spydaap

@@ -13,18 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import str
+from builtins import object
+
 import os
 import re
 from spydaap.daap import do
 
 
-class Parser:
+class Parser(object):
 
     def handle_string_tags(self, map, md, daap):
         h = {}
         for k in md.tags.keys():
             if k in map:
-                tag = [unicode(t) for t in md.tags[k]]
+                tag = [str(t) for t in md.tags[k]]
                 tag = [t for t in tag if t != ""]
                 if not(map[k] in h):
                     h[map[k]] = []
@@ -39,7 +42,7 @@ class Parser:
                 val = md.tags[k]
                 if isinstance(val, list):
                     val = val[0]
-                intval = self.my_int(unicode(val))
+                intval = self.my_int(str(val))
                 if intval:
                     daap.append(do(map[k], intval))
 
@@ -57,7 +60,7 @@ class Parser:
         return name
 
     def clean_int_string(self, s):
-        return re.sub(u'[^0-9]', '', unicode(s))
+        return re.sub(u'[^0-9]', '', str(s))
 
     def my_int(self, s):
         try:
