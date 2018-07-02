@@ -73,7 +73,7 @@ class OrderedCache(object):
         return self.get_item_by_pid(cfn, id)
 
     def __len__(self):
-        return os.path.getsize(os.path.join(self.dir, 'index')) / 32
+        return os.path.getsize(os.path.join(self.dir, 'index')) // 32
 
     def build_index(self, pid_list=None):
         index_fn = os.path.join(self.dir, 'index')

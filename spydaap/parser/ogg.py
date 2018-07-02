@@ -25,6 +25,6 @@ class OggParser(spydaap.parser.vorbis.VorbisParser):
         return self.file_re.match(filename)
 
     def parse_extra_vorbis(self, filename, md, daap):
-        daap.extend([do('daap.songbitrate', md.info.bitrate / 1000),
+        daap.extend([do('daap.songbitrate', md.info.bitrate // 1000),
                      do('daap.songformat', 'ogg'),
                      do('daap.songdescription', 'Ogg/Vorbis Audio File')])

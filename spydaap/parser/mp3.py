@@ -101,7 +101,7 @@ class Mp3Parser(spydaap.parser.Parser):
                 self.handle_disc(mp3, d)
             self.add_file_info(filename, d)
             d.extend([do('daap.songtime', mp3.info.length * 1000),
-                      do('daap.songbitrate', mp3.info.bitrate / 1000),
+                      do('daap.songbitrate', mp3.info.bitrate // 1000),
                       do('daap.songsamplerate', mp3.info.sample_rate),
                       do('daap.songformat', 'mp3'),
                       do('daap.songdescription', 'MPEG Audio File'),
