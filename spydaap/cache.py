@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import object
+
 from hashlib import md5
 import os
 
@@ -42,7 +44,7 @@ class Cache(object):
 
 class OrderedCache(object):
 
-    class Iter:
+    class Iter(object):
 
         def __init__(self, cache):
             self.cache = cache
@@ -51,7 +53,7 @@ class OrderedCache(object):
         def __iter__(self):
             return self
 
-        def next(self):
+        def __next__(self):
             if self.n >= len(self.cache):
                 raise StopIteration
             self.n = self.n + 1
