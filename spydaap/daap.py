@@ -140,7 +140,7 @@ class DAAPObject(object):
             value = ''
             for item in self.contains:
                 # get the data stream from each of the sub elements
-                if isinstance(item, str):
+                if isinstance(item, basestring):
                     # preencoded
                     value += item
                 else:
@@ -167,7 +167,7 @@ class DAAPObject(object):
             elif self.type == 'ul':
                 packing = 'Q'
             elif self.type == 'i':
-                if (isinstance(value, str) and len(value) <= 4):
+                if (isinstance(value, basestring) and len(value) <= 4):
                     packing = '4s'
                 else:
                     packing = 'i'
@@ -188,7 +188,7 @@ class DAAPObject(object):
             elif self.type == 't':
                 packing = 'I'
             elif self.type == 's':
-                if isinstance(value, str):
+                if isinstance(value, basestring):
                     value = value.encode('utf-8')
                 packing = '%ss' % len(value)
             else:
@@ -200,9 +200,9 @@ class DAAPObject(object):
             data = struct.pack('!4sI%s' % (packing), self.code, length, value)
             return data
 
-    def processData(self, str):
+    def processData(self, data_string):
         # read 4 bytes for the code and 4 bytes for the length of the objects data
-        data = str.read(8)
+        data = data_string.read(8)
 
         if not data:
             return
@@ -215,18 +215,18 @@ class DAAPObject(object):
             self.type = dmapCodeTypes[self.code][1]
 
         if self.type == 'c':
-            start_pos = str.tell()
+            start_pos = data_string.tell()
             self.contains = []
             # the object is a container, we need to pass it
             # it's length amount of data for processessing
             while str.tell() < start_pos + self.length:
-                object = DAAPObject()
-                self.contains.append(object)
-                object.processData(str)
+                obj = DAAPObject()
+                self.contains.append(obj)
+                obj.processData(data_string)
             return
 
         # not a container, we're a single atom. Read it.
-        code = str.read(self.length)
+        code = data_string.read(self.length)
 
         if self.type == 'l':
             # the object is a long long number,

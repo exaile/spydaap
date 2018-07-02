@@ -92,7 +92,7 @@ class MetadataCacheItem(spydaap.cache.OrderedCacheItem):
         return k in self.get_md()
 
     def read(self):
-        f = open(self.path)
+        f = open(self.path, 'rb')
         fn_len = struct.unpack('!i', f.read(4))[0]
         self.original_filename = f.read(fn_len)
         name_len = struct.unpack('!i', f.read(4))[0]
@@ -118,7 +118,7 @@ class MetadataCacheItem(spydaap.cache.OrderedCacheItem):
     def get_md(self):
         if self.md is None:
             self.md = {}
-            s = io.StringIO(self.get_dmap_raw())
+            s = io.BytesIO(self.get_dmap_raw())
             l = len(self.get_dmap_raw())
             data = []
             while s.tell() != l:
