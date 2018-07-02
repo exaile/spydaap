@@ -43,7 +43,7 @@ class MetadataCache(spydaap.cache.OrderedCache):
                     self.build(os.path.join(path, d), marked, True)
             for fn in files:
                 ffn = os.path.join(path, fn)
-                digest = md5(ffn).hexdigest()
+                digest = md5(ffn.encode('utf-8')).hexdigest()
                 marked[digest] = True
                 md = self.get_item_by_pid(digest)
                 if (not(md.get_exists()) or
