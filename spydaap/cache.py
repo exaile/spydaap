@@ -29,7 +29,7 @@ class Cache(object):
             os.mkdir(self.dir)
 
     def get(self, id, func):
-        id = md5(id).hexdigest()
+        id = md5(id.encode('utf-8')).hexdigest()
         fn = os.path.join(self.dir, id)
         if (not(os.path.exists(fn))):
             f = open(fn, 'w')
