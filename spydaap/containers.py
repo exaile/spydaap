@@ -76,7 +76,7 @@ class ContainerCacheItem(spydaap.cache.OrderedCacheItem):
         self._len = None
 
     def read(self):
-        f = open(self.path)
+        f = open(self.path, 'rb')
         self._len = struct.unpack('!i', f.read(4))[0]
         name_len = struct.unpack('!i', f.read(4))[0]
         self.name = f.read(name_len)

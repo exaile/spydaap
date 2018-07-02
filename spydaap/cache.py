@@ -16,6 +16,7 @@
 from __future__ import unicode_literals
 
 from builtins import object
+from builtins import str
 
 from hashlib import md5
 import os
@@ -32,10 +33,10 @@ class Cache(object):
         id = md5(id.encode('utf-8')).hexdigest()
         fn = os.path.join(self.dir, id)
         if (not(os.path.exists(fn))):
-            f = open(fn, 'w')
+            f = open(fn, 'wb')
             func(f)
             f.close()
-        return open(fn)
+        return open(fn, 'rb')
 
     def clean(self):
         for f in os.listdir(self.dir):

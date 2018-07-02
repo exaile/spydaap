@@ -230,11 +230,11 @@ def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
                 else:
                     end = os.stat(fn).st_size
                 start = int(start)
-                f = spydaap.ContentRangeFile(fn, open(fn), start, end)
+                f = spydaap.ContentRangeFile(fn, open(fn, 'rb'), start, end)
                 extra_headers = {"Content-Range": "bytes %s-%s/%s" % (str(start), str(end), str(os.stat(fn).st_size))}
                 status = 206
             else:
-                f = open(fn)
+                f = open(fn, 'rb')
                 extra_headers = {}
                 status = 200
             # this is ugly, very wrong.
