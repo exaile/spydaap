@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import optparse
 
 import BaseHTTPServer
@@ -107,7 +109,7 @@ def really_main(opts, parent_pid=99999999999999):
         open(opts.pidfile, 'w').write("%d" % parent_pid)
     except socket.error:
         if not opts.daemonize:
-            print "Another DAAP server is already running. Exiting."
+            print("Another DAAP server is already running. Exiting.")
 
         sys.exit(0)  # silently exit; another instance is already running
 
@@ -182,9 +184,9 @@ def main():
         try:
             pid = int(open(opts.pidfile, 'r').read())
             os.kill(pid, signal.SIGTERM)
-            print "Daemon killed."
+            print("Daemon killed.")
         except (OSError, IOError):
-            print "Unable to kill daemon -- not running, or missing pid file?"
+            print("Unable to kill daemon -- not running, or missing pid file?")
 
         sys.exit(0)
 
@@ -200,13 +202,13 @@ def main():
 
     if not(opts.daemonize):
         if not opts.quiet:
-            print "spydaap server started (use --help for more options).  Press Ctrl-C to exit."
+            print("spydaap server started (use --help for more options).  Press Ctrl-C to exit.")
         # redirect outputs to a logfile
         sys.stdout = sys.stderr = Log(open(opts.logfile, 'a+'), opts.quiet)
         really_main(opts)
     else:
         if not opts.quiet:
-            print "spydaap daemon started in background."
+            print("spydaap daemon started in background.")
         # redirect outputs to a logfile
         sys.stdout = sys.stderr = Log(open(opts.logfile, 'a+'), True)
         try:
@@ -234,7 +236,7 @@ def main():
                 parent_pid = pid
                 sys.exit(0)
         except OSError as e:
-            print >>sys.stderr, "fork #2 failed: %d (%s)" % (e.errno, e.strerror)
+            print("fork #2 failed: %d (%s)" % (e.errno, e.strerror), file=sys.stderr)
             sys.exit(1)
         # load parent pid
         parent_pid = int(open(opts.pidfile + '.tmp', 'r').read())
