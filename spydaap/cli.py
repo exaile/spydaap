@@ -18,8 +18,8 @@ from __future__ import print_function
 
 import optparse
 
-import BaseHTTPServer
-import SocketServer
+import http.server
+import socketserver
 import grp
 import os
 import pwd
@@ -64,12 +64,12 @@ class Log(object):
             self.stdout.flush()
 
 
-class MyThreadedHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
+class MyThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     """Handle requests in a separate thread."""
     timeout = 1
 
     def __init__(self, *args):
-        BaseHTTPServer.HTTPServer.__init__(self, *args)
+        http.server.HTTPServer.__init__(self, *args)
         self.keep_running = True
 
     def serve_forever(self):

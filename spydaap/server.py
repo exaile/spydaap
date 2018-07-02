@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
-import BaseHTTPServer
+import http.server
 import errno
 import os
 import re
@@ -26,7 +26,7 @@ from spydaap.daap import do
 def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
     session_id = 1
 
-    class DAAPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    class DAAPHandler(http.server.BaseHTTPRequestHandler):
         daap_server_revision = 1
         protocol_version = "HTTP/1.1"
 
