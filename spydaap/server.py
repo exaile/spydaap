@@ -13,11 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+# urllib.parse compatibility
+from future import standard_library
+standard_library.install_aliases()
+
 import http.server
 import errno
 import os
 import re
-import urlparse
+import urllib.parse
 import socket
 import spydaap
 from spydaap.daap import do
@@ -75,7 +79,7 @@ def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
         drop_q = '(?:\\?.*)?$'
 
         def do_GET(self):
-            parsed_path = urlparse.urlparse(self.path).path
+            parsed_path = urllib.parse.urlparse(self.path).path
             if re.match(self.itunes_re + "/$", parsed_path):
                 self.do_GET_login()
             elif re.match(self.itunes_re + '/server-info$', parsed_path):
