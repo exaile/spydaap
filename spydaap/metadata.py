@@ -13,12 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from future import standard_library
+standard_library.install_aliases()
+
 from hashlib import md5
 
 import os
 import struct
 import spydaap.cache
-import StringIO
+import io
 from spydaap.daap import do
 
 
@@ -115,7 +118,7 @@ class MetadataCacheItem(spydaap.cache.OrderedCacheItem):
     def get_md(self):
         if self.md is None:
             self.md = {}
-            s = StringIO.StringIO(self.get_dmap_raw())
+            s = io.StringIO(self.get_dmap_raw())
             l = len(self.get_dmap_raw())
             data = []
             while s.tell() != l:
