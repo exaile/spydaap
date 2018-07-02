@@ -43,7 +43,7 @@ def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
             self.send_header('Accept-Ranges', 'bytes')
             self.send_header('Content-Language', 'en_us')
             if 'extra_headers' in kwargs:
-                for k, v in kwargs['extra_headers'].iteritems():
+                for k, v in kwargs['extra_headers'].items():
                     self.send_header(k, v)
             try:
                 if isinstance(data, file):
