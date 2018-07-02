@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from setuptools import setup
 import platform
 
@@ -38,7 +40,7 @@ Features:
 
 Note: This pypi package is maintained by the Exaile project, but will be kept in
 sync with the upstream spydaap project.
- 
+
 """,
     url="https://github.com/egh/spydaap",
     install_requires=reqs,

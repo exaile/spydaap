@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 
 dmapCodeTypes = {
     #'f\x8dch': ('dmap.haschildcontainers', 'b'),

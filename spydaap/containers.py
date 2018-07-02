@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import unicode_literals
+
 from hashlib import md5
 import os
 import struct
@@ -60,7 +62,7 @@ class ContainerCacheItem(spydaap.cache.OrderedCacheItem):
     @classmethod
     def write_entry(self, dir, name, d, length):
         data = struct.pack('!i', length)
-        data = data + struct.pack('!i%ss' % len(name), len(name), name)
+        data = data + struct.pack('!i%ss' % len(name), len(name), name.encode('utf-8'))
         data = data + d.encode()
         cachefn = os.path.join(dir, md5(name).hexdigest())
         f = open(cachefn, 'w')

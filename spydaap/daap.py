@@ -9,6 +9,8 @@
 #
 # Stripped clean + a few bug fixes, Erik Hetzner
 
+from __future__ import unicode_literals
+
 from builtins import str
 from builtins import object
 
@@ -137,18 +139,19 @@ class DAAPObject(object):
             # our object is a container,
             # this means we're going to have to
             # check contains[]
-            value = ''
+            value = b''
             for item in self.contains:
                 # get the data stream from each of the sub elements
-                if isinstance(item, basestring):
+                if isinstance(item, bytes):
                     # preencoded
                     value += item
                 else:
-                    value += item.encode()
+                    tmp = item.encode()
+                    value += tmp
             # get the length of the data
             length = len(value)
             # pack: 4 byte code, 4 byte length, length bytes of value
-            data = struct.pack('!4sI%ss' % length, self.code, length, value)
+            data = struct.pack('!4sI%ss' % length, self.code.encode('utf-8'), length, value)
             return data
         else:
             # we don't have to traverse anything
@@ -167,8 +170,9 @@ class DAAPObject(object):
             elif self.type == 'ul':
                 packing = 'Q'
             elif self.type == 'i':
-                if (isinstance(value, basestring) and len(value) <= 4):
+                if (isinstance(value, str) and len(value) <= 4):
                     packing = '4s'
+                    value = value.encode('utf-8')
                 else:
                     packing = 'i'
             elif self.type == 'ui':
@@ -188,16 +192,17 @@ class DAAPObject(object):
             elif self.type == 't':
                 packing = 'I'
             elif self.type == 's':
-                if isinstance(value, basestring):
+                if isinstance(value, str):
                     value = value.encode('utf-8')
                 packing = '%ss' % len(value)
             else:
                 raise DAAPError('DAAPObject: encode: unknown code %s' % self.code)
                 return
+
             # calculate the length of what we're packing
             length = struct.calcsize('!%s' % packing)
             # pack: 4 characters for the code, 4 bytes for the length, and 'length' bytes for the value
-            data = struct.pack('!4sI%s' % (packing), self.code, length, value)
+            data = struct.pack('!4sI%s' % (packing), self.code.encode('utf-8'), length, value)
             return data
 
     def processData(self, data_string):
@@ -219,7 +224,7 @@ class DAAPObject(object):
             self.contains = []
             # the object is a container, we need to pass it
             # it's length amount of data for processessing
-            while str.tell() < start_pos + self.length:
+            while data_string.tell() < start_pos + self.length:
                 obj = DAAPObject()
                 self.contains.append(obj)
                 obj.processData(data_string)

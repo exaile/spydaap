@@ -15,6 +15,7 @@
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import print_function
+from __future__ import unicode_literals
 
 from past.builtins import execfile
 from builtins import object
