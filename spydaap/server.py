@@ -50,10 +50,10 @@ def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
                 for k, v in kwargs['extra_headers'].items():
                     self.send_header(k, v)
             try:
-                if isinstance(data, file):
-                    self.send_header("Content-Length", str(os.stat(data.name).st_size))
-                else:
+                if isinstance(data, bytes):
                     self.send_header("Content-Length", len(data))
+                else:
+                    self.send_header("Content-Length", str(os.stat(data.name).st_size))
             except Exception:
                 pass
             self.end_headers()
@@ -61,11 +61,12 @@ def makeDAAPHandlerClass(server_name, cache, md_cache, container_cache):
                 pass
             else:
                 try:
-                    if (hasattr(data, 'next')):
+                    if isinstance(data, bytes):
+                        self.wfile.write(data)
+                    else:
                         for d in data:
                             self.wfile.write(d)
-                    else:
-                        self.wfile.write(data)
+
                 except socket.error as err:
                     (err_no, err_str) = err.args
                     if err_no in [errno.ECONNRESET]:
