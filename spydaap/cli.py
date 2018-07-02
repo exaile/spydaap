@@ -66,6 +66,9 @@ class Log(object):
             self.stdout.write(s)
             self.stdout.flush()
 
+    def flush(self):
+        self.f.flush()
+
 
 class MyThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     """Handle requests in a separate thread."""
