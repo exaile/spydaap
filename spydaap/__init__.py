@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import object
+
 import os
 import spydaap.playlists
 import spydaap.parser.mp3
@@ -48,7 +50,7 @@ class ContentRangeFile(object):
     def __len__(self):
         return self.length
 
-    def next(self):
+    def __next__(self):
         to_read = self.chunk
         if (self.end is not None):
             if (self.read >= self.end):
