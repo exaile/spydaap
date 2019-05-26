@@ -49,6 +49,16 @@ md_cache = spydaap.metadata.MetadataCache(os.path.join(spydaap.cache_dir, "media
 container_cache = spydaap.containers.ContainerCache(os.path.join(spydaap.cache_dir, "containers"), spydaap.container_list)
 keep_running = True
 
+# Set process name
+# Note: python2 returns linux2 as platform, while python3 returns linux
+if sys.platform == 'linux' or sys.platform == 'linux2':
+    try:
+        import ctypes
+        libc = ctypes.CDLL('libc.so.6')
+        libc.prctl(15, b'spydaap', 0, 0, 0) # 15 = PR_SET_NAME
+    except Exception:
+        raise
+
 
 class Log(object):
     """file like for writes with auto flush after each write
