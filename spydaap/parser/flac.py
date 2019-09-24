@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
 
 import spydaap.parser.vorbis
 import re

@@ -13,13 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Spydaap. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
-from builtins import str
-
-# urllib.parse compatibility
-from future import standard_library
-standard_library.install_aliases()
 
 import http.server
 import errno

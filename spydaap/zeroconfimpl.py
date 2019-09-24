@@ -1,8 +1,5 @@
 # adopted from http://stackp.online.fr/?p=35
 
-from __future__ import unicode_literals
-
-from builtins import object
 
 __all__ = ["ZeroconfImpl"]
 

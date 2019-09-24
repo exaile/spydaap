@@ -9,10 +9,6 @@
 #
 # Stripped clean + a few bug fixes, Erik Hetzner
 
-from __future__ import unicode_literals
-
-from builtins import str
-from builtins import object
 
 import logging
 import struct
