@@ -37,7 +37,7 @@ import spydaap.zeroconfimpl
 
 config_file = os.path.join(spydaap.spydaap_dir, "config.py")
 if os.path.isfile(config_file):
-    execfile(config_file)
+    exec(open(config_file).read())
 
 cache = spydaap.cache.Cache(spydaap.cache_dir)
 md_cache = spydaap.metadata.MetadataCache(os.path.join(spydaap.cache_dir, "media"), spydaap.parsers)
