@@ -88,7 +88,7 @@ class MetadataCacheItem(spydaap.cache.OrderedCacheItem):
     def __getitem__(self, k):
         return self.md[k]
 
-    def has_key(self, k):
+    def __contains__(self, k):
         return k in self.get_md()
 
     def read(self):
