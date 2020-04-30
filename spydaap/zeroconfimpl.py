@@ -45,7 +45,7 @@ class ZeroconfImpl(object):
                 self.name + "." + type_,
                 address=address,
                 port=self.port,
-                properties=self.text,
+                properties=self.text.encode('utf-8'),
                 server=self.host if self.host else None
             )
 
