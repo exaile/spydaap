@@ -32,7 +32,7 @@ class ZeroconfImpl(object):
             # zeroconf doesn't do this for us
             # .. pick one at random? Ideally, zeroconf would publish all valid
             #    addresses as the A record.. but doesn't seem to do so
-            addrs = zeroconf.get_all_addresses(socket.AF_INET)
+            addrs = zeroconf.get_all_addresses()
             address = None
             if addrs:
                 for addr in addrs:
