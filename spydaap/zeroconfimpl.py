@@ -26,7 +26,7 @@ class ZeroconfImpl(object):
 
     class Zeroconf(Helper):
 
-        def publish(self):
+        def publish(self, ipv4=True, ipv6=True):
             import zeroconf
 
             # zeroconf doesn't do this for us
